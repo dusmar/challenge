@@ -92,10 +92,10 @@ public class Task1Test extends TestCase {
      */
 
 	
-	public void testPrintMessage() {
+	public void testWalkGraph() {
 		Task1 task1 = new Task1();
 		List<GNode> results = task1.walkGraph(root);
-		assertTrue(expectedResult.containsAll(results) && results.containsAll(expectedResult));
+		assertTrue(expectedResult.containsAll(results) && results.containsAll(expectedResult) && results.size()==expectedResult.size());
 	}
 
 
