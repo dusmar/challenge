@@ -10,11 +10,10 @@ import com.cischallenge.graph.GNode;
 public class Task1 {
 
 	/**
-	 *  breadth first traversal. node are stored to arraylist and then simple returned
+	 *  method is using  breadth first traversal algorithm to return all nodes in graph.
 	 * 
-	 * @param root
-	 *            node
-	 * @return list containing every GNode in the graph. Each node should appear
+	 * @param node root node
+	 * @return ArrayList containing every GNode in the graph. Each node should appear
 	 *         in the ArrayList exactly once (i.e. no duplicates).
 	 */
 	public List<GNode> walkGraph(GNode node) {

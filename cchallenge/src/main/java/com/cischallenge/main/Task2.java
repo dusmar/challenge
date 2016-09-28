@@ -7,26 +7,26 @@ import com.cischallenge.graph.GNode;
 
 public class Task2 {
 
-	public void dfs(GNode node, List<GNode> currentPath, List<List<GNode>> allPaths) {
-		System.out.println(node.getName());
+	
+	private void pathsInner(GNode node, List<GNode> currentPath, List<List<GNode>> allPaths) {
 		// for every child
 		currentPath.add(node);
 		if (node.getChildren().length==0) {
 			allPaths.add(currentPath);
 		}
 		for (GNode n : node.getChildren()) {
-			dfs(n, new ArrayList<GNode>(currentPath),allPaths);
+			pathsInner(n, new ArrayList<GNode>(currentPath),allPaths);
 		}
 	}
 
 	/**
-	 * 
-	 * @param node
-	 * @return
+	 * Method is using depth first traversal algorithm to return all possible paths started at 'node'
+	 * @param start of paths
+	 * @return ArrayList of ArrayLists, representing all  possible paths through the graph starting at 'node'. 
 	 */
 	public List<List<GNode>> paths(GNode node) {
 		List<List<GNode>> allPaths = new ArrayList<List<GNode>>();
-		dfs(node, new ArrayList<GNode>(), allPaths);
+		pathsInner(node, new ArrayList<GNode>(), allPaths);
 		print(allPaths);
 		return allPaths;
 	}

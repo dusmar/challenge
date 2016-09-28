@@ -1,5 +1,4 @@
-The default whitespace delimiter used by a scanner is as recognized by Character.isWhitespace. The reset() method will reset the value of the scanner's delimiter to the default whitespace delimiter regardless of whether it was previously changed.
-
+The default whitespace delimiter used by a scanner is as recognized by Character.isWhitespace. 
+The reset() method will reset the value of the scanner's delimiter to 
+the default whitespace delimiter regardless of whether it was previously changed.
 A scanning operation may block waiting for input.
-
-The next() and hasNext() methods and their primitive-type companion methods (such as nextInt() and hasNextInt()) first skip any input that matches the delimiter pattern, and then attempt to return the next token. Both hasNext and next methods may block waiting for further input. Whether a hasNext method blocks has no connection to whether or not its associated next method will block.

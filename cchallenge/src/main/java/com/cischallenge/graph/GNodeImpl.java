@@ -27,6 +27,9 @@ public class GNodeImpl implements GNode {
 		return result;
 	}
 
+	/**
+	 * assumption -  name of node is unique. if not, also children nodes should be checked here
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

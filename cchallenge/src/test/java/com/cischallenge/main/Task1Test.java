@@ -76,7 +76,7 @@ public class Task1Test extends TestCase {
 
 	
 	/**
-     * 
+     * input graph
      *	A
      *		B
      *  		E

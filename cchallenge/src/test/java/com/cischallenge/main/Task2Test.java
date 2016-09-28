@@ -28,6 +28,7 @@ public class Task2Test extends TestCase {
 
 		GNodeImpl nodeG = new GNodeImpl("G", new GNodeImpl[0]);
 		GNodeImpl nodeH = new GNodeImpl("H", new GNodeImpl[0]);
+
 		GNodeImpl nodeI = new GNodeImpl("I", new GNodeImpl[0]);
 
 		GNodeImpl nodeC = new GNodeImpl("C", new GNodeImpl[] { nodeG, nodeH, nodeI });
@@ -78,7 +79,22 @@ public class Task2Test extends TestCase {
 	}
 
 
-
+	
+	/**
+     * input graph
+     *	A
+     *		B
+     *  		E
+     *  		F
+     *		C	
+     *  		G
+     *  		H
+     *  		I
+     * 		D
+     *  		J
+	 *
+     *
+     */
 	public void testPaths() {
 		Task2 task2 = new Task2();
 		List<List<GNode>> results = task2.paths(root);
