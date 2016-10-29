@@ -1,0 +1,320 @@
+@import './schema.scss';
+
+* {
+	  box-sizing:border-box !important;
+  	margin:0;
+  	padding:0;
+    outline:0;
+}
+
+.hidden {
+	display:none;
+}
+
+.no-margin {
+	margin:0px;
+	border:0px;
+	padding:0px;
+}
+
+.left {
+	text-align: left;
+}
+
+.float-left {
+	float:left;
+}
+
+.right {
+	text-align: right;
+}
+
+.float-right {
+	float:right;
+}
+
+.center {
+	text-align: center;
+}
+
+//GRID
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+// Creates a wrapper for a series of columns
+@mixin make-row() {
+  @include clearfix();
+  margin:0;
+}
+
+@mixin make-col($size, $columns: $grid-columns) {
+    float: left;
+    width: percentage($size / $columns);
+}
+
+@mixin make-col-offset($columns) {
+  margin-left: percentage(($columns / $grid-columns));
+}
+@mixin make-col-push($columns) {
+  left: percentage(($columns / $grid-columns));
+}
+@mixin make-col-pull($columns) {
+  right: percentage(($columns / $grid-columns));
+}
+
+// [converter] This is defined recursively in LESS, but Sass supports real loops
+@mixin make-grid-columns($i: 1, $list: ".col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}, .col-xl-#{$i}") {
+  @for $i from (1 + 1) through $grid-columns {
+    $list: "#{$list}, .col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}, .col-xl-#{$i}";
+  }
+  #{$list} {
+    position: relative;
+    // Prevent columns from collapsing when empty
+    min-height: 1px;
+    width:100%;
+  }
+}
+
+
+@mixin float-grid-columns($class, $i: 1, $list: ".col-#{$class}-#{$i}") {
+  @for $i from (1 + 1) through $grid-columns {
+    $list: "#{$list}, .col-#{$class}-#{$i}";
+  }
+  #{$list} {
+    float: left;
+  }
+}
+
+
+@mixin calc-grid-column($index, $class, $type) {
+  @if ($type == width) and ($index > 0) {
+    .col-#{$class}-#{$index} {
+      width: percentage(($index / $grid-columns));
+    }
+
+    .col-height-#{$class} {
+      position:relative;
+      display: table-cell;
+      float: none !important;
+      height: 100%;
+      vertical-align: top;
+
+
+      > div {
+        width:100%;
+        height:100%;
+      }
+
+    }
+
+
+  }
+}
+
+@mixin calc-row-height($class) {
+    .row-height-#{$class} {
+      position:relative;
+      display: table;
+      table-layout: fixed;
+      height: 100%;
+      width: 100%;
+    }
+}
+
+
+@mixin loop-grid-columns($columns, $class, $type) {
+  @for $i from 0 through $columns {
+    @include calc-grid-column($i, $class, $type);
+    @include calc-row-height($class);
+  }
+}
+
+
+// Create grid for specific class
+@mixin make-grid($class) {
+  @include float-grid-columns($class);
+  @include loop-grid-columns($grid-columns, $class, width);
+  /*
+  @include loop-grid-columns($grid-columns, $class, pull);
+  @include loop-grid-columns($grid-columns, $class, push);
+  @include loop-grid-columns($grid-columns, $class, offset);
+  */
+}
+
+
+.row-height {
+  display: table;
+  table-layout: fixed;
+  height: 100%;
+  width: 100%;
+}
+.col-height {
+  display: table-cell;
+  float: none !important;
+  height: 100%;
+  vertical-align: top;
+}
+.col-top {
+  vertical-align: top;
+}
+.col-middle {
+  vertical-align: middle;
+}
+.col-bottom {
+  vertical-align: bottom;
+}
+
+@mixin make-container() {
+	position:relative;
+	width:100%;
+	border:0px;
+	margin:0px auto;
+
+  @media (min-width: $screen-sm-min) {
+    width: $container-sm;
+  }
+  @media (min-width: $screen-md-min) {
+    width: $container-md;
+  }
+  @media (min-width: $screen-lg-min) {
+    width: $container-lg;
+  }
+  @media (min-width: $screen-xl-min) {
+    width: $container-xl;
+  }
+}
+
+
+.container {
+	@include make-container;
+}
+
+.container-box {
+	@include make-container;
+	padding: 15px;
+}
+
+.row {
+  @include make-row;
+}
+
+@mixin make-margin($class, $margin) {
+  .#{$class}-#{abs($margin)} {
+    margin-left: #{$margin}px;
+    margin-right: #{$margin}px;
+  }
+}
+
+@include make-margin('row-margin', -5);
+@include make-margin('row-margin', -10);
+
+@include make-grid-columns;
+
+@include make-grid(xs);
+
+@media (min-width: $screen-sm-min) {
+  @include make-grid(sm);
+}
+
+@media (min-width: $screen-md-min) {
+  @include make-grid(md);
+}
+
+@media (min-width: $screen-lg-min) {
+  @include make-grid(lg);
+}
+
+@media (min-width: $screen-xl-min) {
+  @include make-grid(xl);
+}
+
+.pos-relative {
+    position: relative;
+}
+
+.pos-absolute {
+    position: absolute;
+}
+
+.padding-10 {
+    padding:10px;
+}
+
+.padding-5 {
+    padding:5px;
+}
+
+.margin-10 {
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.margin-20 {
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.margin-5 {
+  margin-top:5px;
+  margin-bottom:5px;
+}
+
+.box {
+    border:$box-border-size solid $box-border-color;
+	  background-color: $box-background-color;
+    min-height:$box-min-height;
+    height:100%;
+}
+
+
+/* Headers - TODO */
+@mixin make-header($header, $class, $margin) {
+  #{$header} {
+
+  }
+
+
+  .#{$class}-#{abs($margin)} {
+    margin-left: #{$margin}px;
+    margin-right: #{$margin}px;
+  }
+}
+
+
+h1 {
+  font-size: $header-h1-font-size;
+  font-family: Open Sans,sans-serif;
+  font-weight:500;
+  color: $header-color;
+  text-align: center;
+}
+
+h1:after {
+    content: "";
+    display: block;
+    height: 2px;
+    width: 76px;
+    margin: 5px auto 10px;
+    background-color: $header-line-color;
+}
+
+
+/* Filters */
+
+
+/* Tables */
+.table-cell {   
+    display:table-cell;
+}
+
+.table-row {
+    display:table-row;
+}

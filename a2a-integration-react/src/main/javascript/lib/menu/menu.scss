@@ -1,0 +1,85 @@
+@import '../../styles/schema.scss';
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.top-menu-bar {
+	position:relative;
+	width:100%;
+	color: $menu-color;
+	background-color:$menu-background-color;
+	list-style-type: none;
+	
+	@include clearfix;
+
+	.container {
+		padding:0px 15px;
+	}
+}
+
+.top-menu-logo {
+	@if $menu-logo {
+		position:relative;
+		width: $menu-logo-width;
+		height: $menu-logo-height;
+        float:left;
+        background-image: url($menu-logo-url); 
+		background-repeat: no-repeat, no-repeat;
+    	background-position: bottom left, top right;
+    } else {
+    	display: none;
+    }
+}
+
+.top-menu-item {
+	float:left;
+
+	a {
+		padding: 20px;
+		display:block;
+		text-decoration: none;
+		font-weight:bolder;
+		color: $menu-color;
+
+		span {
+    		color: $menu-color;
+    		margin-bottom: 2px;
+    	}
+
+    	&:visited {
+			span {
+    			color: $menu-color;
+    			margin-bottom: 2px;
+	    	}
+    	}
+
+		&:hover {
+			span {
+				color: $menu-color-hover;
+    			margin-bottom: 2px;
+	    	}
+        	background-color:$menu-background-color-hover;
+    	}
+	}
+	
+}
+
+.top-menu-item.active > a:hover > span {
+	color: $menu-color-hover;
+	border-bottom: 2px solid $menu-border-color-hover;
+}
+
+.top-menu-item.active > a > span {
+	color: $menu-color-active;
+	border-bottom: 2px solid $menu-border-color-active;
+}
+
+ 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		">
+
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${db.driver}" />
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+		<property name="initialSize" value="${db.connection.initialSize:10}" />
+		<property name="maxIdle" value="-1" />
+		<property name="maxActive" value="${db.connection.maxActive:100}" />
+		<property name="maxWait" value="-1" />
+		<property name="validationQuery" value="select 1 from dual" />
+		<property name="testOnBorrow" value="true" />
+	</bean>
+
+
+	<util:properties id="hibernateProperties">
+		<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+		<prop key="hibernate.show_sql">${db.showSql:false}</prop>
+		<prop key="hibernate.format_sql">${db.formatSql:false}</prop>
+		<prop key="hibernate.connection.release_mode">auto</prop>
+		<prop key="hibernate.connection.autocommit">false</prop>
+		<prop key="hibernate.default_batch_fetch_size">32</prop>
+		<prop key="hibernate.jdbc.batch_size">32</prop>
+		<prop key="hibernate.generate_statistics">${db.showStats:false}</prop>
+	</util:properties>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan">
+			<list>
+				<value>com.a2a.home.</value>
+				<value>com.a2a.message.</value>
+			</list>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.a2a.home.ChartDataItem</value>
+				<value>com.a2a.message.Message</value>
+			</list>
+		</property>
+		<property name="hibernateProperties" ref="hibernateProperties" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+</beans>

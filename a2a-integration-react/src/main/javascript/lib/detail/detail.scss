@@ -1,0 +1,28 @@
+.detail-row:before,
+.detail-row::after {
+	content: " ";
+	display: table;
+}
+
+.detail-row:after {
+	clear: both;
+}
+
+.detail-label {
+	width: 35%;
+	float:left;
+	padding:5px;
+	text-align:right;
+	font-weight:bolder;
+	overflow:hidden;
+}
+
+.detail-value {
+	width: 65%;
+	float:left;
+	padding:5px;
+	text-align:left;
+	overflow:hidden;
+}
+
+//TODO - collapse?
